@@ -21,6 +21,8 @@ list_of_files = [
    "pyproject.toml",
    "tox.ini",
    "experiments/experiments.ipynb", 
+   ".gitignore" ,
+   "README.md"
 ]
 
 for filepath in list_of_files:
