@@ -1,0 +1,35 @@
+training_pipeline_config :
+  pipeline_name : DiamondPricePrediction 
+  artifact_dir : artifact
+
+
+data_ingestion_config :
+  data_ingestion_dir : 'data_ingestion'
+  ingested_dir : ingested_data 
+  raw_data_dir : raw_data
+  ingested_train_dir : train 
+  ingested_test_dir : test  
+
+
+data_validation_config :
+  data_validation_dir : 'data_validation'
+  schema_dir: config
+  schema_file_name : schema.yaml 
+  report_file_name : report.json
+  report_page_file_name : report.html 
+
+
+
+data_transformation_config : 
+  add_bedroom_per_room : True
+  transformed_dir : transformed_data_dir 
+  transformed_train_dir : train
+  transformed_test_dir : test
+  preprocessing_dir : preprocessed_obj
+  preprocessing_object_file_name : preprocessed.pkl 
+
+model_training_config :
+  trained_model_main_dir_name : model_training
+  trained_model_dir : trained_model
+  model_file_name : model.pkl
+  base_accuracy : 0.6
