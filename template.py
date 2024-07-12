@@ -1,13 +1,18 @@
 import os
 from pathlib import Path
 
-package_name = "MlOps1"
+package_name = "MLOps_project1"
 
 list_of_files = [
    ".github/workflows/ci.yaml",
    "src/__init__.py",
-   f"src/{package_name}/__init__.py", 
-   f"src/{package_name}/mongo_crud.py", 
+   f"src/{package_name}/__init__.py" ,
+    f"src/{package_name}/components/__init__.py",
+    f"src/{package_name}/config/__init__.py",
+    f"src/{package_name}/logger/__init__.py",
+    f"src/{package_name}/exception/__init__.py",
+    f"src/{package_name}/pipeline/__init__.py",
+    f"src/{package_name}/entity/__init__.py"
    "tests/__init__.py",
    "tests/unit/__init__.py",
    "tests/unit/unit.py",
