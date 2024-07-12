@@ -35,3 +35,8 @@ class ModelTrainingConfig:
     trained_model_file_path :str 
     model_file_name : str  
     base_accuracy :str 
+    
+@dataclass(frozen=True)
+class ModelEvaluationConfig:
+    model_evaluation_file_path :str 
+    

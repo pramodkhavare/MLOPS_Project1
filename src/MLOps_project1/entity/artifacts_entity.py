@@ -14,3 +14,8 @@ class DataTransformationArtifacts:
 @dataclass(frozen=True)
 class ModelTrainingArtifacts:
     trained_model_file_path :str 
+
+
+@dataclass(frozen=True)
+class ModelEvaluationArtifact:
+    evaluated_model_path :str 
