@@ -12,6 +12,10 @@ from src.MLOps_project1.logger import logging
 from src.MLOps_project1.exception import CustomException
 from src.MLOps_project1.entity.config_entity import DataTransformationConfig ,ModelTrainingConfig ,ModelEvaluationConfig
 from src.MLOps_project1.entity.artifacts_entity import DataIngestionArtifacts ,DataTransformationArtifacts ,ModelTrainingArtifacts
+import mlflow
+import mlflow.sklearn
+from urllib.parse import urlparse
+
 
 class ModelEvaluation:
     def __init__(self, 
@@ -36,19 +40,24 @@ class ModelEvaluation:
         logging.info("evaluation metrics captured")
         return rmse, mae, r2
 
-    def initiate_model_evaluation(self,train_array,test_array):
+    def initiate_model_evaluation(self):
         try:
+             test_array = load_array(self.data_transformation_artifacts.transformed_test_data_path)
+             print("Test Array")
+             print(test_array)
              X_test,y_test=(test_array[:,:-1], test_array[:,-1])
 
-             model_path=os.path.join("artifacts","model.pkl")
+             model_path=self.model_training_artifacts.trained_model_file_path
              model=load_object(model_path)    
              logging.info("model has register")
+             
+             mlflow.set_registry_uri("")  #You wil pass uri where you want to register your model if yp=ou try to host your model
 
              tracking_url_type_store=urlparse(mlflow.get_tracking_uri()).scheme
+             print("tracking_url_type_store")
 
              print(tracking_url_type_store)
-
-
+             print(mlflow.set_registry_uri(""))
 
              with mlflow.start_run():
 
@@ -62,6 +71,7 @@ class ModelEvaluation:
 
                  # Model registry does not work with file store
                 if tracking_url_type_store != "file":
+                    print(122222222)
 
                     # Register the model
                     # There are other ways to use the Model Registry, which depends on the use case,
@@ -69,8 +79,8 @@ class ModelEvaluation:
                     # https://mlflow.org/docs/latest/model-registry.html#api-workflow
                     mlflow.sklearn.log_model(model, "model", registered_model_name="ml_model")
                 else:
+                    print(33333333333333)
                     mlflow.sklearn.log_model(model, "model")
 
-
         except Exception as e:
-            raise customexception(e,sys)
+            raise CustomException(e,sys)

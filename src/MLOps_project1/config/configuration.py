@@ -1,8 +1,7 @@
 from dataclasses import dataclass
 import os ,sys 
 from src.MLOps_project1.entity.config_entity import DataIngestionConfig ,TrainingPipelineConfig ,\
-                                                    DataTransformationConfig,ModelTrainingConfig
-
+                                                    DataTransformationConfig,ModelTrainingConfig ,ModelEvaluationConfig
 
 from src.MLOps_project1.utils.utils import read_yaml
 from src.MLOps_project1.constant import *
@@ -147,8 +146,16 @@ class Configuration():
 
         except Exception as e:
             raise CustomException (e ,sys)
-
-
+        
+    def get_model_evalution_config(self) ->ModelEvaluationConfig:
+        try:
+            model_evaluation_config = ModelEvaluationConfig(
+                model_evaluation_file_path= "Pass"
+            ) 
+            
+            return model_evaluation_config
+        except Exception as e:
+            raise CustomException (e ,sys)
 
 
 if __name__ == "__main__":

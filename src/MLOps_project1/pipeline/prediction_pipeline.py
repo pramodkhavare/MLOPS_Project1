@@ -70,7 +70,6 @@ class PredictPipeline:
     def get_latest_model_path(self):
         try:
             # Get list of folders in the specified directory
-
             folder_list = os.listdir(self.model_dir)
             # Sort the folders by name (which represents the date)
             sorted_folders = sorted(folder_list, reverse=True)
@@ -78,11 +77,13 @@ class PredictPipeline:
             # Extract the newest folder (first element after sorting)
             newest_folder = sorted_folders[0] 
             filename = os.listdir(os.path.join(self.model_dir ,newest_folder))[0]
-            file_path = os.path.join(self.model_dir ,newest_folder ,filename)
-
+            print("FULENAME")
+            print(filename)
+            file_path = os.path.join(self.model_dir ,newest_folder ,filename ,'model.pkl')
+            print(file_path)
             return file_path
         except Exception as e:
-            raise CustomException(e ,sys) from e 
+            raise CustomException(e, sys) from e
         
     def get_latest_preprocessor_path(self):
         try:

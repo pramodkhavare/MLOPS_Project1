@@ -4,7 +4,8 @@ from src.MLOps_project1.components.model_training import ModelTrainer
 from src.MLOps_project1.exception import CustomException 
 from src.MLOps_project1.logger import logging 
 from src.MLOps_project1.config.configuration import Configuration
-from src.MLOps_project1.entity.artifacts_entity import DataIngestionArtifacts ,DataTransformationArtifacts
+from src.MLOps_project1.entity.artifacts_entity import DataIngestionArtifacts ,DataTransformationArtifacts  ,ModelTrainingArtifacts ,ModelEvaluationArtifact
+from src.MLOps_project1.components.model_evaluation import ModelEvaluation
 import os ,sys
 import pandas as pd
 import uuid
@@ -69,15 +70,32 @@ class Pipeline(Thread):
                 data_transformation_artifacts= data_transformation_artifacts
             )
             
-            
-         
             print("Model Training Completed\n")
-            return model_trainer.initate_model_training(
-          
+            model_training_artifacts = model_trainer.initate_model_training(
             )
+            return model_training_artifacts
+        
         except Exception as e:
             raise CustomException(e ,sys) from e  
-
+        
+    def start_model_evaluation(self ,data_ingestion_artifacts :DataIngestionArtifacts ,model_training_artifacts:ModelTrainingArtifacts,\
+                                  data_transformation_artifacts : DataTransformationArtifacts):
+        try:
+            model_evaluation_config = self.config.get_model_evalution_config()
+            
+            model_evaluation = ModelEvaluation(
+                config= model_evaluation_config,
+                data_ingestion_artifacts= data_ingestion_artifacts,
+                model_training_artifacts= model_training_artifacts,
+                data_transformation_artifacts= data_transformation_artifacts
+            ) 
+            model_evaluation_artifacts = model_evaluation.initiate_model_evaluation(
+                
+            )
+            return model_evaluation_artifacts
+            
+        except Exception as e:
+            raise CustomException(e ,sys) from e  
 
     def run_pipeline(self):
         try:
@@ -85,7 +103,18 @@ class Pipeline(Thread):
             data_transformation_artifacts = self.start_data_transformation(
                 data_ingestion_artifacts=data_ingestion_artifacts 
             )
-            model_training_artifacts = self.start_model_training(data_transformation_artifacts=data_transformation_artifacts)
+            model_training_artifacts = self.start_model_training(
+                data_transformation_artifacts=data_transformation_artifacts)
+            
+            model_evaluation_artifacts = self.start_model_evaluation(
+                data_ingestion_artifacts= data_ingestion_artifacts ,
+                model_training_artifacts= model_training_artifacts ,
+                data_transformation_artifacts= data_transformation_artifacts
+            )
+            
+            return model_evaluation_artifacts
+            
+            
         except Exception as e:
             raise CustomException(e ,sys)
         

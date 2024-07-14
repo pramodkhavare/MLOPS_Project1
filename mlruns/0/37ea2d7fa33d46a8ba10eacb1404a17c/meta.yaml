@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Data%20Science/MachineLearning/Project/UnderProcessProject/MLOPS_Project1/mlruns/0/37ea2d7fa33d46a8ba10eacb1404a17c/artifacts
+end_time: 1720968353842
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 37ea2d7fa33d46a8ba10eacb1404a17c
+run_name: bouncy-ram-622
+run_uuid: 37ea2d7fa33d46a8ba10eacb1404a17c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1720968350163
+status: 3
+tags: []
+user_id: PRAMOD KHAVARE
